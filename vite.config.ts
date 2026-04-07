@@ -1,8 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-/** GitHub Pages: https://rokiee09.github.io/ClinicCore/ — yalnızca build’de alt yol */
-export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/ClinicCore/" : "/",
+/**
+ * Yerel: npm run dev → base /
+ * GitHub Actions: npm run build -- --base /ClinicCore/
+ * Elle build: npm run build:gh
+ */
+export default defineConfig({
   plugins: [react()],
-}));
+});
