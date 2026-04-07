@@ -1,5 +1,5 @@
 # Site: https://rokiee09.github.io/ClinicCore/
-# Pages ayarı: Settings → Pages → Source = "Deploy from a branch" → branch: gh-pages, folder: / (root)
+# Pages: branch = main, folder = /docs (Deploy from a branch → main → /docs)
 name: Deploy to GitHub Pages
 
 on:
@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: gh-pages
+  group: pages-docs
   cancel-in-progress: true
 
 jobs:
@@ -30,9 +30,11 @@ jobs:
           npm ci
           npm run build -- --base /ClinicCore/
 
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Publish dist to main/docs
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          force_orphan: true
+          branch: main
+          folder: dist
+          target-folder: docs
+          clean: true
+          commit-message: "deploy: GitHub Pages [skip ci]"
